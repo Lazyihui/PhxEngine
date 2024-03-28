@@ -13,6 +13,10 @@ public class Sample_Phx2D : MonoBehaviour {
     RBEntity floorSquare;
     void Start() {
         phx = new Phx2D();
+        phx.OnIntersectEnterHandle = (a, b) => {
+            Debug.Log("OnIntersectEnterHandle"+a.id+" "+b.id);
+        };
+
         rbCircle = phx.Add(1, ShapeType.Circle, new Vector2(1, 1));
         rbCircle.gravityScale = 1;
         rbCircle.position = circle.transform.position;

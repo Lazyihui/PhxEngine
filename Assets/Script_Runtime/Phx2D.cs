@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,14 @@ namespace PhxEngine2D {
         SortedList<int, RBEntity> all;
 
         public Vector2 gravity;
+
+        HashSet<ulong> intersectedSet;
+
+        public Action<RBEntity, RBEntity> OnIntersectEnterHandle;//交叉开始
+
+        public Action<RBEntity, RBEntity> OnIntersectStayHandle;//交叉持续
+        public Action<RBEntity, RBEntity> OnIntersectExitHandle;//交叉结束
+
         public Phx2D() {
             gravity = new Vector2(0, -9.8f);
             all = new SortedList<int, RBEntity>();
@@ -65,6 +74,10 @@ namespace PhxEngine2D {
                 if (isIntersected) {
                     a.isIntersected = true;
                     b.isIntersected = true;
+
+
+
+                    OnIntersectEnterHandle.Invoke(a, b);
                 } else {
                     a.isIntersected = false;
                     b.isIntersected = false;
