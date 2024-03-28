@@ -22,6 +22,8 @@ namespace PhxEngine2D {
         public float gravityScale;
         // 是否静态
         public bool isStatic;
+        // 是否交叉
+        public bool isIntersected;
 
         public RBEntity() {
 
@@ -30,9 +32,9 @@ namespace PhxEngine2D {
 #if UNITY_EDITOR
         public void DrawGizmos() {
             Gizmos.color = Color.green;
-            // if (isIntersected) {
-            //     Gizmos.color = Color.red;
-            // }
+            if (isIntersected) {
+                Gizmos.color = Color.red;
+            }
             if (shapeType == ShapeType.Square) {
                 Vector2 halfSize = size * 0.5f;
                 Vector2 a = new Vector2(halfSize.x, halfSize.y);
