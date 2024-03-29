@@ -15,15 +15,15 @@ public class Sample_Phx2D : MonoBehaviour {
     void Start() {
         phx = new Phx2D();
         phx.OnTriggerEnterHandle = (a, b) => {
-            Debug.Log("OnIntersectEnterHandle"+a.id+" "+b.id);
+            Debug.Log("OnIntersectEnterHandle" + a.id + " " + b.id);
         };
 
         phx.OnTriggerStayHandle = (a, b) => {
-            Debug.Log("OnIntersectStayHandle"+a.id+" "+b.id);
+            Debug.Log("OnIntersectStayHandle" + a.id + " " + b.id);
         };
 
         phx.OnTriggerExitHandle = (a, b) => {
-            Debug.Log("OnIntersectExitHandle"+a.id+" "+b.id);
+            Debug.Log("OnIntersectExitHandle" + a.id + " " + b.id);
         };
 
         rbCircle = phx.Add(1, ShapeType.Circle, new Vector2(1, 1));
@@ -43,12 +43,21 @@ public class Sample_Phx2D : MonoBehaviour {
 
     void Update() {
         float dt = Time.deltaTime;
-
+        // 这个
+        // == Physics2D.Simulate(Time.fixedDeltaTime);
         phx.Tick(dt);
 
         circle.transform.position = rbCircle.position;
         circle2.transform.position = rbCircle2.position;
         floor.transform.position = floorSquare.position;
+    }
+
+    void FixedUpdate() {
+
+        // 我所写的东西 就是这个函数
+        // 这个等同于 我写的tick()
+        Physics2D.Simulate(Time.fixedDeltaTime);
+
     }
 
     void OnDrawGizmos() {
