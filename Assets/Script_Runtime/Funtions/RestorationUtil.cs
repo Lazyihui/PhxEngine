@@ -4,10 +4,6 @@ namespace PhxEngine2D {
 
     public static class Restoration {
         public static void RestorePenetration_Circle_Cilcle(RBEntity a, RBEntity b) {
-            // 1. 计算穿透深度
-            // 2. 计算穿透方向
-            // 3. 修正位置
-            // 4. 修正速度
 
             bool isIntersected = IntersectionUtil.IsIntersected_Circle_Circle(a.position, a.size.x, b.position, b.size.x, out float intersectedLen);
 

@@ -58,9 +58,12 @@ namespace PhxEngine2D {
                 for (int j = i + 1; j < all.Count; j += 1) {
                     RBEntity b = all.Values[j];
                     ulong key = GetCombineKey(a.id, b.id);
-                    if (intersectedSet.Contains(key)) {
-                        // 穿透恢复
-                        Restoration.RestorePenetration_Circle_Cilcle(a, b);
+                    if (a.shapeType == ShapeType.Circle && b.shapeType == ShapeType.Circle) {
+
+                        if (intersectedSet.Contains(key)) {
+                            // 穿透恢复
+                            Restoration.RestorePenetration_Circle_Cilcle(a, b);
+                        }
                     }
                 }
             }
