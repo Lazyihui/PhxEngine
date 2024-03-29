@@ -51,7 +51,19 @@ namespace PhxEngine2D {
                 }
             }
             // 4、交叉检测事件触发
-            // 5.穿透恢复
+
+            // // 5.穿透恢复
+            for (int i = 0; i < all.Count; i += 1) {
+                RBEntity a = all.Values[i];
+                for (int j = i + 1; j < all.Count; j += 1) {
+                    RBEntity b = all.Values[j];
+                    ulong key = GetCombineKey(a.id, b.id);
+                    if (intersectedSet.Contains(key)) {
+                        // 穿透恢复
+                        Restoration.RestorePenetration_Circle_Cilcle(a, b);
+                    }
+                }
+            }
             // 6.穿透恢复事件触发
 
         }
@@ -72,7 +84,7 @@ namespace PhxEngine2D {
         void Intersect_RB_RB(RBEntity a, RBEntity b) {
             if (a.shapeType == ShapeType.Circle && b.shapeType == ShapeType.Circle) {
                 // 圆和圆
-                bool isIntersected = IntersectionUtil.IsIntersected_Circle_Circle(a.position, a.size.x, b.position, b.size.x);
+                bool isIntersected = IntersectionUtil.IsIntersected_Circle_Circle(a.position, a.size.x, b.position, b.size.x, out _);
                 if (isIntersected) {
                     // 本次交叉了
                     a.isIntersected = true;

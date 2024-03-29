@@ -14,15 +14,15 @@ public class Sample_Phx2D : MonoBehaviour {
     void Start() {
         phx = new Phx2D();
         phx.OnIntersectEnterHandle = (a, b) => {
-            Debug.Log("OnIntersectEnterHandle"+a.id+" "+b.id);
+            // Debug.Log("OnIntersectEnterHandle"+a.id+" "+b.id);
         };
 
         phx.OnIntersectStayHandle = (a, b) => {
-            Debug.Log("OnIntersectStayHandle"+a.id+" "+b.id);
+            // Debug.Log("OnIntersectStayHandle"+a.id+" "+b.id);
         };
 
         phx.OnIntersectExitHandle = (a, b) => {
-            Debug.Log("OnIntersectExitHandle"+a.id+" "+b.id);
+            // Debug.Log("OnIntersectExitHandle"+a.id+" "+b.id);
         };
 
         rbCircle = phx.Add(1, ShapeType.Circle, new Vector2(1, 1));

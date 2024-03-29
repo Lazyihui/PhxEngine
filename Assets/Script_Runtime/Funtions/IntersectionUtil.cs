@@ -13,11 +13,20 @@ namespace PhxEngine2D {
         //     float distSqr = diff.magnitude;
         //     return distSqr <= (aRadius + bRadius)*(aRadius + bRadius);
         // }
-        public static bool IsIntersected_Circle_Circle(Vector2 aCenter, float aRadius, Vector2 bCenter, float bRadius) {
+        public static bool IsIntersected_Circle_Circle(Vector2 aCenter, float aRadius, Vector2 bCenter, float bRadius, out float intersectedLen) {
+            // 性能
+            // Vector2 diff = aCenter - bCenter;
+            // // float dis = diff.magnitude; // 得到开平方后的结果
+            // float disSqr = diff.sqrMagnitude; // 不开平方
+            // return disSqr <= (aRadius + bRadius) * (aRadius + bRadius);
+            // 不管性能
             Vector2 diff = aCenter - bCenter;
-            // float dis = diff.magnitude; // 得到开平方后的结果
-            float disSqr = diff.sqrMagnitude; // 不开平方
-            return disSqr <= (aRadius + bRadius) * (aRadius + bRadius);
+            float dis = diff.magnitude;
+            float r = aRadius + bRadius;
+            intersectedLen = r - dis;// 交叉长度
+            return dis <= r;
         }
+        
+
     }
 }
