@@ -15,10 +15,12 @@ namespace PhxEngine2D {
         public Action<RBEntity, RBEntity> OnIntersectEnterHandle;//交叉开始
 
         public Action<RBEntity, RBEntity> OnIntersectStayHandle;//交叉持续
+
         public Action<RBEntity, RBEntity> OnIntersectExitHandle;//交叉结束
 
         public Phx2D() {
             gravity = new Vector2(0, -9.8f);
+            intersectedSet = new HashSet<ulong>();
             all = new SortedList<int, RBEntity>();
         }
 
@@ -72,13 +74,29 @@ namespace PhxEngine2D {
                 // 圆和圆
                 bool isIntersected = IntersectionUtil.IsIntersected_Circle_Circle(a.position, a.size.x, b.position, b.size.x);
                 if (isIntersected) {
+                    // 本次交叉了
                     a.isIntersected = true;
                     b.isIntersected = true;
+                    ulong key = GetCombineKey(a.id, b.id);
+                    if (intersectedSet.Contains(key)) {
+                        // 交叉持续
+                        OnIntersectStayHandle.Invoke(a, b);
+                    } else {
+                        // 交叉开始
+                        intersectedSet.Add(key);
+                        OnIntersectEnterHandle.Invoke(a, b);
+                    }
+                    // 如果上次交叉了触发stay，否则触发enter
 
-
-
-                    OnIntersectEnterHandle.Invoke(a, b);
                 } else {
+                    // 本次没有交叉
+                    // 如果上次交叉了触发exit
+                    ulong key = GetCombineKey(a.id, b.id);
+                    if (intersectedSet.Contains(key)) {
+                        // 交叉结束
+                        intersectedSet.Remove(key);
+                        OnIntersectExitHandle.Invoke(a, b);
+                    }
                     a.isIntersected = false;
                     b.isIntersected = false;
                 }
@@ -91,6 +109,15 @@ namespace PhxEngine2D {
             } else {
                 Debug.LogError("未知的形状类型");
             }
+        }
+        // 两个数合成一个数
+        ulong GetCombineKey(int a, int b) {
+            uint a_ = (uint)a;
+            uint b_ = (uint)b;
+            uint min = Math.Min(a_, b_);
+            uint max = Math.Max(a_, b_);
+            return (ulong)(min << 32) | max;
+
         }
     }
 }
