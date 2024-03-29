@@ -14,15 +14,15 @@ public class Sample_Phx2D : MonoBehaviour {
     RBEntity floorSquare;
     void Start() {
         phx = new Phx2D();
-        phx.OnIntersectEnterHandle = (a, b) => {
+        phx.OnTriggerEnterHandle = (a, b) => {
             Debug.Log("OnIntersectEnterHandle"+a.id+" "+b.id);
         };
 
-        phx.OnIntersectStayHandle = (a, b) => {
+        phx.OnTriggerStayHandle = (a, b) => {
             Debug.Log("OnIntersectStayHandle"+a.id+" "+b.id);
         };
 
-        phx.OnIntersectExitHandle = (a, b) => {
+        phx.OnTriggerExitHandle = (a, b) => {
             Debug.Log("OnIntersectExitHandle"+a.id+" "+b.id);
         };
 

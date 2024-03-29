@@ -25,6 +25,8 @@ namespace PhxEngine2D {
         // 是否交叉
         public bool isIntersected;
 
+        public bool isTrigger;
+
         public RBEntity() {
 
         }
